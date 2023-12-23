@@ -22,12 +22,15 @@ install_packages() {
   log "Installing PyGObject for the battery monitor module..." sudo apt install python3-gi -y &>/dev/null
   log "Installing pygit2 for the git module..." sudo apt install python3-pip -y && pip3 install pygit2 &>/dev/null
   log "Installing Powerline Shell..." git clone https://github.com/b-ryan/powerline-shell &>/dev/null
+  log "Installing brightnessctl..." sudo apt install brightnessctl -y &>/dev/null
+  log "Installing xbacklight..." sudo apt-get install xbacklight alsa-utils pulseaudio -y &>/dev/null
 }
 
 customize_system() {
   cd powerline-shell
   log "Building Powerline Shell installation..." python3 setup.py build &>/dev/null
   log "Installing Powerline Shell..." python3 setup.py install &>/dev/null
+  log "Adding user to the video group..." sudo usermod -aG video $USER
   cd ..
 }
 
