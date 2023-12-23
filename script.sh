@@ -6,6 +6,9 @@ sudo apt update
 # Install Alacritty
 sudo apt install alacritty -y
 
+# Install picom
+sudo apt install picom 
+
 # Install scrot for taking screenshots
 sudo apt install scrot -y
 
