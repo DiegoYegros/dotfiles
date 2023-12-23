@@ -1,53 +1,53 @@
 #!/bin/bash
 
-# Update package list
-sudo apt update
+# Function for logging
+log() {
+  local msg="$1"; shift
+  if [[ "${LOG_LEVEL}" == "info" || "${LOG_LEVEL}" == "quiet" ]]; then
+    printf "[%s]: %s\\n" "$*" "$msg" >&2
+  elif [[ "${LOG_LEVEL}" == "debug" ]]; then
+    # Debug mode outputs even more detailed info
+    echo "[DEBUG][${*}]: ${msg}"
+  fi
+}
 
-# Install Alacritty
-sudo apt install alacritty -y
+# Initialize logger
+LOG_LEVEL="quiet"
 
-# Install picom
-sudo apt install picom -y 
+# Original script with added logging functionality
+install_packages() {
+  log "Installing PsUtil..." sudo apt install python3-psutil -y &>/dev/null
+  log "Installing Font Awesome..." sudo apt install fonts-font-awesome -y &>/dev/null
+  log "Installing Feh..." sudo apt-get install -y feh &>/dev/null
+  log "Installing PyGObject for the battery monitor module..." sudo apt install python3-gi -y &>/dev/null
+  log "Installing pygit2 for the git module..." sudo apt install python3-pip -y && pip3 install pygit2 &>/dev/null
+  log "Installing Powerline Shell..." git clone https://github.com/b-ryan/powerline-shell &>/dev/null
+}
 
-# Install scrot for taking screenshots
-sudo apt install scrot -y
+customize_system() {
+  cd powerline-shell
+  log "Building Powerline Shell installation..." python3 setup.py build &>/dev/null
+  log "Installing Powerline Shell..." python3 setup.py install &>/dev/null
+  cd ..
+}
 
-# Just making sure you have python3
-sudo apt install python3 -y
+copy_dotfiles() {
+  local source_file="$PWD/.bashrc"
+  local destination_dir="${HOME}"
 
-# Install psutil for the bumblebee-status CPU module
-sudo apt install python3-psutil -y
-
-# Install font-awesome for icons
-sudo apt install fonts-font-awesome -y
-
-# Install feh
-sudo apt-get install -y feh 
-
-# Install pygit2 for the git module in bumblebee-status
-# Since pygit2 is a Python library, we use pip to install it
-# Ensure pip is installed
-sudo apt install python3-pip -y
-
-pip3 install pygit2
-
-# Install powerline-shell for ofc a pretty shell
-git clone https://github.com/b-ryan/powerline-shell
-cd powerline-shell
-python setup.py install
-
-echo "All required packages have been installed."
-
-# Copy .bashrc to home directory
-#!/bin/bash
-
-source_file="/.bashrc"
-
-destination_dir=$HOME
-
-if [ -f "$source_file" ]; then
+  if [ -f "$source_file" ]; then
     cp -f "$source_file" "$destination_dir"
-    echo ".bashrc file copied and replaced existing file in your home directory."
-else
-	cp "$source_file" "$destination_dir"
-fi
+    log "Copied .bashrc and replaced existing file in the user's home directory."
+  else
+    cp "$source_file" "$destination_dir"
+    log "Copied .bashrc to the user's home directory."
+  fi
+}
+
+main() {
+  install_packages
+  customize_system
+  copy_dotfiles
+}
+
+main
