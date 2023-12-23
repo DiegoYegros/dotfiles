@@ -38,3 +38,16 @@ python setup.py install
 
 echo "All required packages have been installed."
 
+# Copy .bashrc to home directory
+#!/bin/bash
+
+source_file="/.bashrc"
+
+destination_dir=$HOME
+
+if [ -f "$source_file" ]; then
+    cp -f "$source_file" "$destination_dir"
+    echo ".bashrc file copied and replaced existing file in your home directory."
+else
+	cp "$source_file" "$destination_dir"
+fi
