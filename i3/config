@@ -151,6 +151,9 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+
+# lock
+bindsym $mod+Shift+o exec i3lock
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -226,4 +229,3 @@ exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 for_window [class="^.*"] border pixel 2 
 # outer gaps
 gaps outer 20
-xss-lock --transfer-sleep-lock -- i3lock --nofork
