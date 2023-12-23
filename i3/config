@@ -196,7 +196,7 @@ bar {
 	position top
 	tray_output none
 	status_command ~/stuff/bumblebee-status/bumblebee-status -m nic disk:root cpu \
-		memory battery date time git \
+		memory battery date time git vpn \
 		-p nic.states="up" disk.path=/home time.format="%H:%M CW %V" date.format="%a, %b %d %Y" \
 		-t iceberg
 
