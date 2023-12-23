@@ -23,5 +23,7 @@ sudo apt-get install -y feh
 sudo apt install python3-pip -y
 pip3 install pygit2
 
+# Install for vpn
+sudo apt install python3-tk -y
 echo "All required packages have been installed."
 
