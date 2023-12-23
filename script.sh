@@ -3,6 +3,9 @@
 # Update package list
 sudo apt update
 
+# Install Alacritty
+sudo apt install alacritty -y
+
 # Install scrot for taking screenshots
 sudo apt install scrot -y
 
