@@ -15,6 +15,8 @@ sudo apt install python3-psutil -y
 # Install font-awesome for icons
 sudo apt install fonts-font-awesome -y
 
+# Install feh
+sudo apt-get install -y feh 
 # Install pygit2 for the git module in bumblebee-status
 # Since pygit2 is a Python library, we use pip to install it
 # Ensure pip is installed
