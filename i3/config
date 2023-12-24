@@ -55,7 +55,8 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons -theme gruvbox-dark-hard.rasi
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-1/launcher.sh
+bindsym $mod+p exec --no-startup-id ~/.config/rofi/powermenu/type-1/powermenu.sh
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
