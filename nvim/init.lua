@@ -34,6 +34,8 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  --transparency
+  'xiyaowong/transparent.nvim',
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -85,7 +87,6 @@ require('lazy').setup({
       },
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
-
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
         vim.keymap.set({ 'n', 'v' }, ']c', function()
@@ -123,10 +124,14 @@ require('lazy').setup({
     'olimorris/onedarkpro.nvim',
     priority = 1000,
     config = function()
+      require("onedarkpro").setup({
+        options = {
+          transparency = true, -- Enable transparent background
+        }
+      })
       vim.cmd.colorscheme 'onedark_dark'
     end,
   },
-
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -198,6 +203,23 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
+require("transparent").setup({
+  {
+    extra_groups = {
+      "BufferLineTabClose",
+      "BufferlineBufferSelected",
+      "BufferLineFill",
+      "BufferLineBackground",
+      "BufferLineSeparator",
+      "BufferLineIndicatorSelected",
+    },
+    exclude = {},
+  }
+
+})
+
+
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -237,7 +259,7 @@ vim.o.guifont = "monospace:h17" -- the font used in graphical neovim application
 vim.o.laststatus = 3
 vim.o.foldlevel = 99
 vim.o.foldmethod = "indent"
--- vim.o.termguicolors = true
+vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 
@@ -303,7 +325,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
+    ensure_installed = { 'c', 'java', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
       'bash' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -366,6 +388,14 @@ vim.defer_fn(function()
     },
   }
 end, 0)
+vim.cmd("highlight Pmenu guibg=NONE")
+vim.cmd("highlight PmenuSel guibg=NONE")
+vim.cmd("highlight PmenuSbar guibg=NONE")
+vim.cmd("highlight PmenuThumb guibg=NONE")
+vim.cmd([[
+  set completeopt=menuone,noinsert,noselect
+  highlight! default link CmpItemKind CmpItemMenuDefault
+]])
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -622,9 +652,18 @@ cmp.setup {
   },
 }
 
-
+-- Transparent popups and other non-editor windows
+vim.api.nvim_create_autocmd("WinEnter", {
+  pattern = "_popup_*",
+  callback = function()
+    vim.api.nvim_win_set_option(0, "background", "none")
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "qf", "Trouble" },
+  callback = function()
+    vim.api.nvim_win_set_option(0, "background", "none")
+  end,
+})
 vim.wo.colorcolumn = "80"
 require('mini.files').setup()
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
