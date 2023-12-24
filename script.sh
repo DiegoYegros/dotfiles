@@ -48,11 +48,27 @@ copy_dotfiles() {
     log "Copied .bashrc to the user's home directory."
   fi
 }
+install_docker(){
+ log "Removing previous docker-desktop if existed..." sudo apt remove docker-desktop -y
+  rm -r $HOME/.docker/desktop &>/dev/null
+  sudo rm /usr/local/bin/com.docker.cli &>/dev/null
+  sudo apt purge docker-desktop &>/dev/null
+  sudo apt-get install ca-certificates curl gnupg -y &>/dev/null
+  sudo install -m 0755 -d /etc/apt/keyrings &>/dev/null
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg &>/dev/null
+  sudo chmod a+r /etc/apt/keyrings/docker.gpg &>/dev/null
+  echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \ &>/dev/null
+  sudo tee /etc/apt/sources.list.d/docker.list &>/dev/null
+  log "Installing docker... " sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y &>/dev/null
+}
 
 main() {
   install_packages
   customize_system
   copy_dotfiles
+  install_docker
 }
 
 main
