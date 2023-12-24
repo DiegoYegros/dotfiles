@@ -666,7 +666,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_win_set_option(0, "background", "none")
   end,
 })
-vim.wo.colorcolumn = "80"
+--vim.wo.colorcolumn = "80" turn this on if you want a dark line in your screen
 
 --make telescope fully transparent and cooler
 local colors = require("catppuccin.palettes").get_palette()
