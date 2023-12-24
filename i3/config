@@ -193,8 +193,8 @@ bar {
 	font pango:Inconsolata 10
 	position top
 	tray_output none
-	status_command ~/stuff/bumblebee-status/bumblebee-status -m nic disk:root cpu \
-		memory battery date time git vpn \
+	status_command ~/stuff/bumblebee-status/bumblebee-status -m \
+		vpn bluetooth2 date time battery\
 		-p nic.states="up" disk.path=/home time.format="%H:%M CW %V" date.format="%a, %b %d %Y" \
 		-t onedark-powerline
 
