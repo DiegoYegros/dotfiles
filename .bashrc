@@ -56,12 +56,18 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+source /usr/lib/git-core/git-sh-prompt
+export GIT_PS1_SHOWDIRTYSTATE=1 
+export GIT_PS1_SHOWUPSTREAM=1 
+#export PS1="\n${BOLD}[\u]${ITALIC}${BLUE} \w${RESET}${BOLD}${YELLOW}${GIT}${RESET}\n${BOLD}\$${RESET} " 
+GIT="\$(__git_ps1)"
+
+color_prompt="yes"
+ 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    #PS1=$(powerline-shell $?)
+    PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ ${GIT} "
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-    #PS1=$(powerline-shell $?)
+    PS1="${debian_chroot:+($debian_chroot)}\u@\h:\w\$ "
 fi
 unset color_prompt force_color_prompt
 
@@ -116,4 +122,17 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
+fi
+source .aliases
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$PATH:~/.local/bin/"
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
