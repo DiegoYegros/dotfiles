@@ -2,7 +2,6 @@
 -- See `:help mapleader`
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -18,7 +17,6 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
-
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -64,17 +62,13 @@ require('lazy').setup({
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
-    },
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lsp',
+    'L3MON4D3/LuaSnip',
+    'rafamadriz/friendly-snippets'
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -394,11 +388,15 @@ vim.defer_fn(function()
     },
   }
 end, 0)
-vim.cmd("highlight Pmenu guibg=NONE")
-vim.cmd("highlight PmenuSel guibg=NONE")
-vim.cmd("highlight PmenuSbar guibg=NONE")
-vim.cmd("highlight PmenuThumb guibg=NONE")
 
+local colors = require("catppuccin.palettes").get_palette()
+
+
+--suggestions color
+vim.cmd("highlight Pmenu guibg=NONE guifg=" .. colors.text)
+vim.cmd("highlight PmenuSel guibg=#705880 guifg=#ffffff")
+vim.cmd("highlight PmenuSbar guibg=" .. colors.surface2)
+vim.cmd("highlight PmenuThumb guibg=" .. colors.blue .. " guifg=" .. colors.surface2)
 vim.cmd([[
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
@@ -592,7 +590,6 @@ require('neodev').setup()
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
@@ -656,6 +653,12 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'cmdline' },
+  },
+  completion = {
+    autocomplete = {
+      require('cmp.types').cmp.TriggerEvent.TextChanged, -- Autocomplete when text is changed
+    },
   },
 }
 
@@ -695,5 +698,4 @@ local TelescopeColor = {
 for hl, col in pairs(TelescopeColor) do
   vim.api.nvim_set_hl(0, hl, col)
 end
-
 require('mini.files').setup()
