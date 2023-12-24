@@ -33,7 +33,7 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-
+  'catppuccin/nvim',
   --transparency
   'xiyaowong/transparent.nvim',
   -- NOTE: This is where your plugins related to LSP can be installed.
@@ -392,6 +392,7 @@ vim.cmd("highlight Pmenu guibg=NONE")
 vim.cmd("highlight PmenuSel guibg=NONE")
 vim.cmd("highlight PmenuSbar guibg=NONE")
 vim.cmd("highlight PmenuThumb guibg=NONE")
+
 vim.cmd([[
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
@@ -666,4 +667,27 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 vim.wo.colorcolumn = "80"
+
+--make telescope fully transparent and cooler
+local colors = require("catppuccin.palettes").get_palette()
+local TelescopeColor = {
+  TelescopeMatching = { fg = colors.peach, bg = "NONE", bold = true },
+  TelescopeSelection = { fg = colors.lavender, bg = "NONE", bold = true },
+  TelescopePromptPrefix = { fg = colors.rosewater, bg = "NONE" },
+  TelescopePromptNormal = { fg = colors.text, bg = "NONE" },
+  TelescopeResultsNormal = { fg = colors.text, bg = "NONE" },
+  TelescopePreviewNormal = { fg = colors.subtext1, bg = "NONE" },
+  TelescopePromptBorder = { fg = colors.surface2, bg = "NONE" },
+  TelescopeResultsBorder = { fg = colors.surface2, bg = "NONE" },
+  TelescopePreviewBorder = { fg = colors.surface2, bg = "NONE" },
+  TelescopeResultsTitle = { fg = colors.blue, bg = "NONE", bold = true },
+  TelescopePreviewTitle = { fg = colors.maroon, bg = "NONE", bold = true },
+  TelescopePromptTitle = { fg = colors.teal, bg = "NONE", bold = true },
+}
+
+-- Apply the highlight groups to telescope
+for hl, col in pairs(TelescopeColor) do
+  vim.api.nvim_set_hl(0, hl, col)
+end
+
 require('mini.files').setup()

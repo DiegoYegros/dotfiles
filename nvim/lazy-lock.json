@@ -16,6 +16,7 @@
   "mini.nvim": { "branch": "main", "commit": "b5645ac6eefce8e7af9d7dd4e5e296a81cba8a10" },
   "mini.surround": { "branch": "main", "commit": "7bf8915ba15d7a4f3c2afe7868d3c15a858d73f1" },
   "neodev.nvim": { "branch": "main", "commit": "269051a7093fa481128904a33a6c4e1ca8de4340" },
+  "nvim": { "branch": "main", "commit": "4fbab1f01488718c3d54034a473d0346346b90e3" },
   "nvim-cmp": { "branch": "main", "commit": "538e37ba87284942c1d76ed38dd497e54e65b891" },
   "nvim-dap": { "branch": "master", "commit": "f0dca670fa059eb89dda8869a6310c804241345c" },
   "nvim-dap-go": { "branch": "main", "commit": "a5cc8dcad43f0732585d4793deb02a25c4afb766" },
