@@ -31,6 +31,7 @@ customize_system() {
   log "Building Powerline Shell installation..." python3 setup.py build &>/dev/null
   log "Installing Powerline Shell..." python3 setup.py install &>/dev/null
   log "Adding user to the video group..." sudo usermod -aG video $USER
+  log "Copying dircolors to home directory..." cp $PWD/.dircolors $HOME
   cd ..
 }
 
