@@ -137,23 +137,6 @@ bindsym $mod+r mode "resize"
 # screenshot
 bindsym Print exec --no-startup-id sh -c 'FILE=~/Pictures/scrnsht_$(date +"%Y-%m-%d_%H-%M-%S").png && scrot "$FILE" && xclip -selection clipboard -t image/png -i "$FILE" < /dev/null &'
 
-# top bar config
-bar {
-	font pango:Inconsolata 10
-	position top
-	tray_output none
-	status_command $status_command
-	colors {
-        background #2E3440
-        statusline #D8DEE9
-        separator #4C566A
-        focused_workspace #81A1C1 #81A1C1 #ECEFF4
-        active_workspace #4C566A #4C566A #D8DEE9
-        inactive_workspace #2E3440 #2E3440 #D8DEE9
-        urgent_workspace #3B4252 #3B4252 #EBCB8B
-        binding_mode #2E3440 #2E3440 #D8DEE9
-    }
-}
 client.focused #81A1C1 #88C0D0 #ECEFF4 #81A1C1 #81A1C1
 client.focused_inactive #4C566A #2E3440 #D8DEE9 #4C566A #4C566A
 client.unfocused #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
@@ -164,8 +147,9 @@ client.background #2E3440
 # Alacritty theme
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 #Dual monitors
-exec --no-startup-id sh -c "sleep 2; xrandr --output HDMI-1-0 --primary --mode 1920x1080 --rate 119.99 --output eDP-1 --mode 1920x1080 --right-of HDMI-1-0"
+exec_always --no-startup-id sh -c "sleep 2; xrandr --output HDMI-1-0 --primary --mode 1920x1080 --rate 119.99 --output eDP-1 --mode 1920x1080 --right-of HDMI-1-0"
 
+exec_always ~/.config/polybar/launch.sh --forest
 # i3 gaps
 for_window [class="^.*"] border pixel 2 
 gaps outer 20
