@@ -117,7 +117,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
+bindsym $mod+Shift+v exec ~/.config/vpn-connect.sh
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
@@ -148,8 +148,10 @@ client.background #2E3440
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 #Dual monitors
 exec_always --no-startup-id sh -c "sleep 2; xrandr --output HDMI-1-0 --primary --mode 1920x1080 --rate 119.99 --output eDP-1 --mode 1920x1080 --right-of HDMI-1-0"
-
+#Polybar
 exec_always ~/.config/polybar/launch.sh --forest
+#mpd
+exec_always --no-startup-id mpd
 # i3 gaps
 for_window [class="^.*"] border pixel 2 
 gaps outer 20
