@@ -12,7 +12,7 @@ log() {
 }
 
 # Initialize logger
-LOG_LEVEL="quiet"
+LOG_LEVEL="debug"
 
 # Original script with added logging functionality
 install_packages() {
@@ -68,7 +68,6 @@ main() {
   install_packages
   customize_system
   copy_dotfiles
-  install_docker
 }
 
 main

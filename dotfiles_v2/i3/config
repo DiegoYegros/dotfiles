@@ -1,0 +1,170 @@
+set $mod Mod4
+set $wallpaper $HOME/.config/i3/pics/bg.jpg
+
+# wallpaper
+# exec_always feh --bg-fill $wallpaper
+
+font pango:monospace 8
+
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+
+set $refresh_i3status killall -SIGUSR1 i3status
+
+# cool binding stuff
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -q set 3%+
+
+floating_modifier $mod
+
+#tiling_drag modifier titlebar
+
+bindsym $mod+Return exec alacritty 
+
+bindsym $mod+q kill
+
+# set launcher menu
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-1/launcher.sh
+bindsym $mod+p exec --no-startup-id ~/.config/rofi/powermenu/type-1/powermenu.sh
+bindsym $mod+bracketright exec --no-startup-id ~/.screenlayout/screenlayout.sh
+
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+h split h
+
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+
+
+set $main_monitor eDP-1
+set $second_monitor HDMI-1-0
+set $third_monitor DP-1
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+workspace $ws1 output $third_monitor
+workspace $ws2 output $main_monitor
+workspace $ws3 output $second_monitor
+workspace $ws4 output $third_monitor
+workspace $ws5 output $main_monitor
+workspace $ws6 output $second_monitor
+workspace $ws7 output $third_monitor
+workspace $ws8 output $main_monitor
+workspace $ws9 output $second_monitor
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# add languages
+exec "setxkbmap -option 'grp:alt_shift_toggle' -layout us,es -variant ,qwerty"
+
+bindsym $mod+Shift+v exec ~/.config/vpn-connect.sh
+
+mode "resize" {
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# screenshot
+# bindsym Print exec --no-startup-id sh -c 'FILE=~/Pictures/scrnsht_$(date +"%Y-%m-%d_%H-%M-%S").png && scrot --focused "$FILE" && xclip -selection clipboard -t image/png -i "$FILE" < /dev/null &'
+bindsym Print exec --no-startup-id gnome-screenshot --interactive
+
+
+client.focused #81A1C1 #88C0D0 #ECEFF4 #81A1C1 #81A1C1
+client.focused_inactive #4C566A #2E3440 #D8DEE9 #4C566A #4C566A
+client.unfocused #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
+client.urgent #3B4252 #3B4252 #EBCB8B #3B4252 #3B4252
+client.placeholder #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
+client.background #2E3440
+
+# Alacritty theme
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
+#Dual monitors
+exec_always --no-startup-id sh -c "sleep 2; xrandr --output HDMI-1-0 --primary --mode 1920x1080 --rate 119.99 --output eDP-1 --mode 1920x1080 --right-of HDMI-1-0"
+
+#Polybar
+exec_always ~/.config/polybar/launch.sh --forest
+
+# i3 gaps
+for_window [class="^.*"] border pixel 0
+#gaps outer 0
+
+bar {
+        status_command exec /home/daya/go/bin/yagostatus --config /home/daya/.config/yagostatus/yagostatus.yml
+}
