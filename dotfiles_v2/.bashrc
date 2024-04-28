@@ -116,13 +116,4 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias gl='git pull'
-alias gp='git push'
-alias gs='git status'
-alias gb='git branch'
-alias gco='git checkout'
-alias gcb='git checkout -b'
-alias gd='git diff'
-alias ga='git add'
-alias gc='git commit'
-alias gcm='git commit -m'
+
