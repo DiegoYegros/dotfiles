@@ -2,35 +2,54 @@ set $mod Mod4
 set $wallpaper $HOME/.config/i3/pics/bg.jpg
 
 # wallpaper
-# exec_always feh --bg-fill $wallpaper
+#exec_always feh --bg-fill $wallpaper
 
 font pango:monospace 8
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+exec "setxkbmap -layout us,es"
+exec "setxkbmap -option 'grp:alt_shift_toggle'"
 
 set $refresh_i3status killall -SIGUSR1 i3status
 
 # cool binding stuff
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- # decrease screen brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -q set 3%+
+bindsym XF86AudioRaiseVolume exec ~/.config/scripts/volume_up.sh
+bindsym XF86AudioLowerVolume exec ~/.config/scripts/volume_down.sh
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+bindsym XF86MonBrightnessDown exec ~/.config/scripts/brightness_down.sh
+bindsym XF86MonBrightnessUp exec ~/.config/scripts/brightness_up.sh
+
 
 floating_modifier $mod
 
 #tiling_drag modifier titlebar
 
-bindsym $mod+Return exec alacritty 
+bindsym $mod+Return exec alacritty
+
+# bind some apps
+
+# dbeaver
+bindsym $mod+Shift+d exec dbeaver-ce 
+#firefox
+bindsym $mod+Shift+f exec firefox
+#intellij
+bindsym $mod+Shift+u exec intellij-idea-ultimate
+#Postman
+bindsym $mod+Shift+p exec postman
+# slack
+bindsym $mod+Shift+s exec slack
 
 bindsym $mod+q kill
 
 # set launcher menu
 bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-1/launcher.sh
 bindsym $mod+p exec --no-startup-id ~/.config/rofi/powermenu/type-1/powermenu.sh
-bindsym $mod+bracketright exec --no-startup-id ~/.screenlayout/screenlayout.sh
+
+# Screen layout config
+bindsym $mod+bracketright exec --no-startup-id ~/.config/scripts/screenlayout_triple_monitor.sh
+bindsym $mod+bracketleft exec --no-startup-id ~/.config/scripts/screenlayout_single_monitor.sh
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -67,7 +86,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 bindsym $mod+a focus parent
-
+bindsym $mod+z focus child
 
 set $main_monitor eDP-1
 set $second_monitor HDMI-1-0
@@ -120,10 +139,8 @@ bindsym $mod+Shift+r restart
 
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# add languages
-exec "setxkbmap -option 'grp:alt_shift_toggle' -layout us,es -variant ,qwerty"
-
-bindsym $mod+Shift+v exec ~/.config/vpn-connect.sh
+# Change Language by pressing Alt+Left Shift.
+bindsym Shift+Alt_L exec "setxkbmap -option 'grp:alt_shift_toggle' -layout us,es -variant qwerty"
 
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
@@ -142,9 +159,10 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # screenshot
+#bindsym Print exec --no-startup-id gnome-screenshot --area --clipboard --file=/tmp/gnome-screenshot-bullshit.png
+bindsym Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
 # bindsym Print exec --no-startup-id sh -c 'FILE=~/Pictures/scrnsht_$(date +"%Y-%m-%d_%H-%M-%S").png && scrot --focused "$FILE" && xclip -selection clipboard -t image/png -i "$FILE" < /dev/null &'
-bindsym Print exec --no-startup-id gnome-screenshot --interactive
-
+bindsym Shift+} exec --no-startup-id gnome-screenshot --interactive
 
 client.focused #81A1C1 #88C0D0 #ECEFF4 #81A1C1 #81A1C1
 client.focused_inactive #4C566A #2E3440 #D8DEE9 #4C566A #4C566A
@@ -153,18 +171,10 @@ client.urgent #3B4252 #3B4252 #EBCB8B #3B4252 #3B4252
 client.placeholder #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
 client.background #2E3440
 
-# Alacritty theme
-exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
-#Dual monitors
-exec_always --no-startup-id sh -c "sleep 2; xrandr --output HDMI-1-0 --primary --mode 1920x1080 --rate 119.99 --output eDP-1 --mode 1920x1080 --right-of HDMI-1-0"
-
-#Polybar
-exec_always ~/.config/polybar/launch.sh --forest
-
 # i3 gaps
-for_window [class="^.*"] border pixel 0
-#gaps outer 0
+for_window [class="^.*"] border pixel 3
+# gaps outer 5
 
 bar {
-        status_command exec /home/daya/go/bin/yagostatus --config /home/daya/.config/yagostatus/yagostatus.yml
+      status_command exec i3blocks
 }
