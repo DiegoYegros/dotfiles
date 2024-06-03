@@ -1,0 +1,4 @@
+import = [
+    "~/.config/alacritty/themes/themes/palenight.toml"
+]
+
