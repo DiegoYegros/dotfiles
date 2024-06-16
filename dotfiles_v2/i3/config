@@ -1,45 +1,43 @@
 set $mod Mod4
-set $wallpaper $HOME/.config/i3/pics/bg.jpg
 
-# wallpaper
-#exec_always feh --bg-fill $wallpaper
-
-font pango:monospace 8
+font pango:monospace 10
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec "setxkbmap -layout us,es"
-exec "setxkbmap -option 'grp:alt_shift_toggle'"
+exec --no-startup-id ~/.config/scripts/fehbg.sh
+exec --no-startup-id picom --config ~/.config/picom/picom.conf
 
 set $refresh_i3status killall -SIGUSR1 i3status
 
 # cool binding stuff
-bindsym XF86AudioRaiseVolume exec ~/.config/scripts/volume_up.sh
-bindsym XF86AudioLowerVolume exec ~/.config/scripts/volume_down.sh
-bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
-bindsym XF86MonBrightnessDown exec ~/.config/scripts/brightness_down.sh
-bindsym XF86MonBrightnessUp exec ~/.config/scripts/brightness_up.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/scripts/volume_up.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/scripts/volume_down.sh
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/scripts/brightness_down.sh
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/scripts/brightness_up.sh
 
 
 floating_modifier $mod
 
 #tiling_drag modifier titlebar
 
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec --no-startup-id alacritty
 
 # bind some apps
 
 # dbeaver
-bindsym $mod+Shift+d exec dbeaver-ce 
+bindsym $mod+Shift+d exec --no-startup-id dbeaver-ce 
 #firefox
-bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+f exec --no-startup-id firefox
+#brave
+bindsym $mod+Shift+b exec --no-startup-id brave
 #intellij
-bindsym $mod+Shift+u exec intellij-idea-ultimate
+bindsym $mod+Shift+u exec --no-startup-id intellij-idea-ultimate
 #Postman
-bindsym $mod+Shift+p exec postman
-# slack
-bindsym $mod+Shift+s exec slack
+bindsym $mod+Shift+p exec --no-startup-id postman
+#Slack
+bindsym $mod+Shift+s exec --no-startup-id slack
 
 bindsym $mod+q kill
 
@@ -137,10 +135,10 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # Change Language by pressing Alt+Left Shift.
-bindsym Shift+Alt_L exec "setxkbmap -option 'grp:alt_shift_toggle' -layout us,es -variant qwerty"
+bindsym Shift+Alt_L exec --no-startup-id "setxkbmap -option 'grp:alt_shift_toggle' -layout us,es -variant qwerty"
 
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
@@ -172,9 +170,9 @@ client.placeholder #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
 client.background #2E3440
 
 # i3 gaps
-for_window [class="^.*"] border pixel 3
-# gaps outer 5
+for_window [class="^.*"] border pixel 0
+gaps outer 10
 
 bar {
-      status_command exec i3blocks
+      status_command SCRIPT_DIR=~/.config/i3blocks i3blocks
 }
