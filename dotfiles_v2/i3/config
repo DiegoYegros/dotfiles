@@ -13,16 +13,16 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id /home/daya/.config/scripts/monitor-setup.sh
-exec --no-startup-id picom --config ~/.config/picom/picom.conf
+exec --no-startup-id picom --config $HOME/.config/picom/picom.conf
 
 set $refresh_i3status killall -SIGUSR1 i3status
 
 # cool binding stuff
-bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/scripts/volume_up.sh
-bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/scripts/volume_down.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/scripts/volume_up.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/scripts/volume_down.sh
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/scripts/brightness_down.sh
-bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/scripts/brightness_up.sh
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/scripts/brightness_down.sh
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.config/scripts/brightness_up.sh
 
 floating_modifier $mod
 
@@ -44,11 +44,11 @@ bindsym $mod+Shift+s exec --no-startup-id slack
 bindsym $mod+q kill
 
 # set launcher menu
-bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-1/launcher.sh
-bindsym $mod+p exec --no-startup-id ~/.config/rofi/powermenu/type-1/powermenu.sh
+bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/launchers/type-1/launcher.sh
+bindsym $mod+p exec --no-startup-id $HOME/.config/rofi/powermenu/type-1/powermenu.sh
 
 # Screen layout config
-bindsym $mod+bracketleft exec --no-startup-id ~/.config/scripts/monitor-setup.sh
+bindsym $mod+bracketleft exec --no-startup-id $HOME/.config/scripts/monitor-setup.sh
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -170,5 +170,5 @@ for_window [class="^.*"] border pixel 0
 gaps outer 10
 
 bar {
-      status_command SCRIPT_DIR=~/.config/i3blocks i3blocks
+      status_command SCRIPT_DIR=$HOME/.config/i3blocks i3blocks
 }
