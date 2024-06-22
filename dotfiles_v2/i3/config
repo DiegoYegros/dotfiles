@@ -2,10 +2,17 @@ set $mod Mod4
 
 font pango:monospace 10
 
+# use xinput command to get your touchpad.
+set $touchpad ELAN0788:00 04F3:321A Touchpad 
+#Enable touchpad tapping [https://major.io/p/tray-icons-in-i3/]
+exec --no-startup-id xinput set-prop $touchpad "libinput Tapping Enabled" 1
+#Enable natural scrolling [https://askubuntu.com/questions/1122513/how-to-add-natural-inverted-mouse-scrolling-in-i3-window-manager]
+exec --no-startup-id xinput set-prop $touchpad "libinput Natural Scrolling Enabled" 1
+
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id ~/.config/scripts/fehbg.sh
+exec --no-startup-id /home/daya/.config/scripts/monitor-setup.sh
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
 
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -17,14 +24,9 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/scripts/brightness_down.sh
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/scripts/brightness_up.sh
 
-
 floating_modifier $mod
 
-#tiling_drag modifier titlebar
-
 bindsym $mod+Return exec --no-startup-id alacritty
-
-# bind some apps
 
 # dbeaver
 bindsym $mod+Shift+d exec --no-startup-id dbeaver-ce 
@@ -46,8 +48,7 @@ bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-1/launcher.sh
 bindsym $mod+p exec --no-startup-id ~/.config/rofi/powermenu/type-1/powermenu.sh
 
 # Screen layout config
-bindsym $mod+bracketright exec --no-startup-id ~/.config/scripts/screenlayout_triple_monitor.sh
-bindsym $mod+bracketleft exec --no-startup-id ~/.config/scripts/screenlayout_single_monitor.sh
+bindsym $mod+bracketleft exec --no-startup-id ~/.config/scripts/monitor-setup.sh
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -139,7 +140,6 @@ bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed 
 
 # Change Language by pressing Alt+Left Shift.
 bindsym Shift+Alt_L exec --no-startup-id "setxkbmap -option 'grp:alt_shift_toggle' -layout us,es -variant qwerty"
-
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
@@ -156,10 +156,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# screenshot
-#bindsym Print exec --no-startup-id gnome-screenshot --area --clipboard --file=/tmp/gnome-screenshot-bullshit.png
 bindsym Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
-# bindsym Print exec --no-startup-id sh -c 'FILE=~/Pictures/scrnsht_$(date +"%Y-%m-%d_%H-%M-%S").png && scrot --focused "$FILE" && xclip -selection clipboard -t image/png -i "$FILE" < /dev/null &'
 bindsym Shift+} exec --no-startup-id gnome-screenshot --interactive
 
 client.focused #81A1C1 #88C0D0 #ECEFF4 #81A1C1 #81A1C1
@@ -168,7 +165,6 @@ client.unfocused #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
 client.urgent #3B4252 #3B4252 #EBCB8B #3B4252 #3B4252
 client.placeholder #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
 client.background #2E3440
-
 # i3 gaps
 for_window [class="^.*"] border pixel 0
 gaps outer 10
