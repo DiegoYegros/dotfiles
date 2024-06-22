@@ -1,1 +1,5 @@
 dotfiles/dotfiles_v2/tmux/plugins/
+*.png
+*.jpeg
+*.jpg
+*.webp
