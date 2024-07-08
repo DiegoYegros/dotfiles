@@ -3,11 +3,10 @@ set $mod Mod4
 font pango:monospace 10
 
 # use xinput command to get your touchpad.
-set $touchpad ELAN0788:00 04F3:321A Touchpad 
 #Enable touchpad tapping [https://major.io/p/tray-icons-in-i3/]
-exec --no-startup-id xinput set-prop $touchpad "libinput Tapping Enabled" 1
+exec_always --no-startup-id xinput set-prop "ELAN0788:00 04F3:321A Touchpad" "libinput Tapping Enabled" 1
 #Enable natural scrolling [https://askubuntu.com/questions/1122513/how-to-add-natural-inverted-mouse-scrolling-in-i3-window-manager]
-exec --no-startup-id xinput set-prop $touchpad "libinput Natural Scrolling Enabled" 1
+exec_always --no-startup-id xinput set-prop "ELAN0788:00 04F3:321A Touchpad" "libinput Natural Scrolling Enabled" 1
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -23,6 +22,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/scripts/volume_d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/scripts/brightness_down.sh
 bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.config/scripts/brightness_up.sh
+
+bindsym $mod+o exec --no-startup-id ~/.config/scripts/launch_apps.sh
 
 floating_modifier $mod
 
@@ -40,6 +41,8 @@ bindsym $mod+Shift+u exec --no-startup-id intellij-idea-ultimate
 bindsym $mod+Shift+p exec --no-startup-id postman
 #Slack
 bindsym $mod+Shift+s exec --no-startup-id slack
+#Obsidian
+bindsym $mod+Shift+o exec --no-startup-id obsidian
 
 bindsym $mod+q kill
 
@@ -159,16 +162,24 @@ bindsym $mod+r mode "resize"
 bindsym Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
 bindsym Shift+} exec --no-startup-id gnome-screenshot --interactive
 
-client.focused #81A1C1 #88C0D0 #ECEFF4 #81A1C1 #81A1C1
-client.focused_inactive #4C566A #2E3440 #D8DEE9 #4C566A #4C566A
-client.unfocused #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
-client.urgent #3B4252 #3B4252 #EBCB8B #3B4252 #3B4252
-client.placeholder #2E3440 #2E3440 #D8DEE9 #2E3440 #2E3440
-client.background #2E3440
 # i3 gaps
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 3
 gaps outer 10
 
-bar {
-      status_command SCRIPT_DIR=$HOME/.config/i3blocks i3blocks
-}
+# Dark purple
+client.focused          #6c3483 #4a235a #ffffff #8e44ad   #4a235a
+#client.focused_inactive #5b2c6f #4a235a #d7bde2 #5b2c6f   #4a235a
+#client.unfocused        #4a235a #2c1a33 #a569bd #2c1a33   #2c1a33
+#client.urgent           #b03a2e #6c3483 #ffffff #6c3483   #6c3483
+#client.placeholder      #2c1a33 #1c1025 #ffffff #2c1a33   #1c1025
+#client.background       #1c1025
+
+assign [class="Slack"] $ws1
+assign [class="Brave"] $ws2
+assign [class="jetbrains-idea"] $ws3
+assign [class="Alacritty"] $ws3
+assign [class="Postman"] $ws3
+assign [class="DBeaver"] $ws3
+
+# Configure polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh

@@ -1,2 +1,2 @@
 #!/bin/bash
-feh --no-fehbg --bg-center '/home/daya/.config/i3/pics/starship2.png'
+feh --no-fehbg --bg-center "$HOME/.config/i3/pics/space-x.jpg"

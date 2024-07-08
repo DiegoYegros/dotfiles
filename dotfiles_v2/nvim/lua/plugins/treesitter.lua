@@ -8,6 +8,7 @@ return {
     'go',
     'lua',
     'markdown',
+    'rust',
     'vim',
     'markdown',
     'java',

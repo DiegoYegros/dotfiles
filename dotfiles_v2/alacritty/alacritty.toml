@@ -14,7 +14,7 @@ family = "NotoMono"
 style = "Regular"
 
 [font]
-size = 15
+size = 10
 
 [selection]
 save_to_clipboard = true
@@ -23,6 +23,6 @@ save_to_clipboard = true
 blur = true
 decorations_theme_variant = "None"
 dynamic_title = true
-opacity = 0.5
+opacity = 0.7
 option_as_alt = "None"
 resize_increments = true

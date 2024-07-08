@@ -1,2 +1,5 @@
 #!/bin/bash
-pactl -- set-sink-volume 0 +5% && notify-send "volume: "$(pactl list sinks | grep -i "^\s*Volume" | tail -1 | grep "[0-9]\+%" -o | head -1)"" -r 99192 #i
+DEFAULT_SINK=$(pactl get-default-sink)
+pactl set-sink-volume "$DEFAULT_SINK" +5%
+VOLUME=$(pactl list sinks | grep -A 15 "Name: $DEFAULT_SINK" | grep "Volume:" | grep -o "[0-9]*%" | head -n 1)
+notify-send "Volume: $VOLUME" -r 99192
