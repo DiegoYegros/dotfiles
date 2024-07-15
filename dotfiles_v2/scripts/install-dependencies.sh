@@ -1,6 +1,12 @@
 #!/bin/bash
 
-deps=(
+snap_deps=(
+	"go"
+	"alacritty"
+	)
+
+apt_deps=(
+	"npm"
 	"xinput"
 	"feh"
 	"picom"
@@ -58,9 +64,20 @@ install() {
 	echo "Starting installation at $(date)" >"$log_file"
 	echo "=============================================" >>"$log_file"
 
-	for dep in "${deps[@]}"; do
-		echo "Installing $dep..."
+	for dep in "${apt_deps[@]}"; do
+		echo "Installing apt package [$dep]..."
 		sudo apt-get install -y "$dep" >>"$log_file" 2>&1
+		if [ $? -eq 0 ]; then
+			echo "Installed $dep successfully."
+		else
+			echo "Failed to install $dep. Check $log_file for details."
+		fi
+	done
+
+	
+	for dep in "${snap_deps[@]}"; do
+		echo "Installing snap package [$dep]..."
+		sudo snap install "$dep" --classic >>"$log_file" 2>&1
 		if [ $? -eq 0 ]; then
 			echo "Installed $dep successfully."
 		else
