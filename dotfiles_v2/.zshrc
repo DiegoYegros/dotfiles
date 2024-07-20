@@ -215,8 +215,6 @@ esac
 
 
 
-    $HOME/.config/scripts/tmux_launcher.sh
-
 
 precmd() {
     # Print the previously configured title
