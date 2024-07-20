@@ -3,3 +3,4 @@ dotfiles/dotfiles_v2/tmux/plugins/
 *.jpeg
 *.jpg
 *.webp
+*.txt
