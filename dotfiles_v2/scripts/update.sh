@@ -87,7 +87,7 @@ upgrade_packages() {
 		read -r response
 		hide_cursor
 		if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
-			run_sudo_command "apt full-upgrade -y"
+			run_sudo_command "apt upgrade -y"
 		else
 			print_color "RED" "Upgrade cancelled."
 			return 1
