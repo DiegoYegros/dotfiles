@@ -9,6 +9,7 @@ snap_deps=(
 )
 
 apt_deps=(
+	"maven"
 	"npm"
 	"xinput"
 	"feh"
