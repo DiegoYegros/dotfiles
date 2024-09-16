@@ -9,6 +9,7 @@ snap_deps=(
 )
 
 apt_deps=(
+	"openjdk-21-jdk-headless"
 	"maven"
 	"npm"
 	"xinput"
