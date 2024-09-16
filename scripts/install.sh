@@ -5,6 +5,7 @@ snap_deps=(
 	"alacritty"
 	"postman"
 	"obsidian"
+	"dbeaver-ce"
 )
 
 apt_deps=(
