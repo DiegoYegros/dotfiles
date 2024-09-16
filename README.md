@@ -3,5 +3,3 @@ If you want to use the tmux theme and you're using WSL, you'll have to install a
 
 ![image](https://github.com/DiegoYegros/dotfiles/assets/64743423/6b2bf4e6-653f-4acd-877c-c5b1106a0c7c)
 
-## TO DOs
-1. Make the initial setup distro-agnostic. Currently you have to run install-dependencies.sh if you're on Ubuntu, or use configuration.nix on Nix OS. This should be transparent.
