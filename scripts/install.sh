@@ -3,6 +3,8 @@
 snap_deps=(
 	"go"
 	"alacritty"
+	"postman"
+	"obsidian"
 )
 
 apt_deps=(
