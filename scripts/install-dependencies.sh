@@ -1,5 +1,4 @@
 #!/bin/bash
-
 snap_deps=(
 	"go"
 	"alacritty"
