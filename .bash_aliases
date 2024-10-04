@@ -2,10 +2,10 @@
 alias wallpaper='/home/daya/.config/scripts/fehbg.sh'
 
 # CONFIG SHORTCUTS
-alias i3config='nvim /home/daya/.config/i3/config'
-alias nvimconfig='nvim /home/daya/.config/nvim/'
-alias alacrittyconfig='nvim /home/daya/.config/alacritty/alacritty.toml'
-alias tmuxconfig='nvim /home/daya/.config/tmux/tmux.conf'
+alias i3config='nvim $XDG_CONFIG_HOME/i3/config'
+alias nvimconfig='nvim $XDG_CONFIG_HOME/nvim/'
+alias alacrittyconfig='nvim $XDG_CONFIG_HOME/alacritty/alacritty.toml'
+alias tmuxconfig='nvim $XDG_CONFIG_HOME/tmux/tmux.conf'
 # GIT
 alias gl='git pull'
 alias gp='git push'
