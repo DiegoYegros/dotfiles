@@ -1,19 +1,19 @@
 return {
-  "williamboman/mason-lspconfig.nvim",
+  'williamboman/mason-lspconfig.nvim',
   dependencies = {
     {
-      "williamboman/mason.nvim",
+      'williamboman/mason.nvim',
       opts = {
         ui = {
-          border = "rounded",
+          border = 'rounded',
         },
       },
       keys = {
-        { "<leader>lI", "<cmd>Mason<CR>", desc = "Opens Mason" },
+        { '<leader>lI', '<cmd>Mason<CR>', desc = 'Opens Mason' },
       },
     },
   },
   opts = {
-    ensure_installed = require("core.languages").servers
+    ensure_installed = require('core.languages').servers,
   },
 }
