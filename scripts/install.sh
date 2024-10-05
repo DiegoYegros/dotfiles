@@ -5,6 +5,7 @@ snap_deps=(
 	"alacritty"
 	"postman"
 	"obsidian"
+	"nvim"
 	"dbeaver-ce"
 )
 
@@ -37,7 +38,6 @@ apt_deps=(
 	"cmake"
 	"btop"
 	"dex"
-	"neovim"
 	"dkms"
 	"dunst"
 	"fzf"
