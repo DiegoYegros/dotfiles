@@ -6,7 +6,6 @@ snap_deps=(
 	"postman"
 	"obsidian"
 	"dbeaver-ce"
-	"nvim"
 )
 
 apt_deps=(
@@ -38,6 +37,7 @@ apt_deps=(
 	"cmake"
 	"btop"
 	"dex"
+	"neovim"
 	"dkms"
 	"dunst"
 	"fzf"
@@ -126,8 +126,13 @@ install() {
 	echo "Installation completed at $(date)" >>"$log_file"
 }
 
+configure(){
+	sudo chmod +s $(which brightnessctl)
+}
+
 main() {
 	install
+	configure
 }
 
 main "$@"
