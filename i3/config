@@ -174,12 +174,5 @@ client.focused          #6c3483 #4a235a #ffffff #8e44ad   #4a235a
 #client.placeholder      #2c1a33 #1c1025 #ffffff #2c1a33   #1c1025
 #client.background       #1c1025
 
-assign [class="Slack"] $ws1
-assign [class="Brave"] $ws2
-assign [class="jetbrains-idea"] $ws3
-assign [class="Alacritty"] $ws3
-assign [class="Postman"] $ws3
-assign [class="DBeaver"] $ws3
-
 # Configure polybar
 exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
