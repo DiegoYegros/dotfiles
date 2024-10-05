@@ -2,10 +2,11 @@
 alias wallpaper='/home/daya/.config/scripts/fehbg.sh'
 
 # CONFIG SHORTCUTS
-alias i3config='nvim $XDG_CONFIG_HOME/i3/config'
-alias nvimconfig='nvim $XDG_CONFIG_HOME/nvim/'
-alias alacrittyconfig='nvim $XDG_CONFIG_HOME/alacritty/alacritty.toml'
-alias tmuxconfig='nvim $XDG_CONFIG_HOME/tmux/tmux.conf'
+alias i3config='nvim $HOME/.config/i3/config'
+alias nvimconfig='nvim $HOME/.config/nvim/'
+alias alacrittyconfig='nvim $HOME/.config/alacritty/alacritty.toml'
+alias tmuxconfig='nvim $HOME/.config/tmux/tmux.conf'
+
 # GIT
 alias gl='git pull'
 alias gp='git push'
@@ -64,6 +65,7 @@ alias mkdir='mkdir -v'
 alias cp='cp -v'
 alias mv='mv -v'
 alias claer='clear'
+alias pdf='zathura'
 # DOCKER
 alias dps='docker ps'
 alias dpsa='docker ps -a'

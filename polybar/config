@@ -138,7 +138,6 @@ cursor-scroll =
 ############                       MODULE I3                        ############
 ################################################################################
 ################################################################################
-
 [module/i3]
 ;https://github.com/jaagr/polybar/wiki/Module:-i3
 type = internal/i3
@@ -442,28 +441,6 @@ type = custom/text
 content = |
 content-foreground = ${colors.foreground}
 content-background =  ${colors.background}
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
-
-################################################################################
-
-[module/pulseaudio]
-type = custom/script
-tail = true
-
-label-padding = 1
-
-
-# Icons mixed from Font Awesome 5 and Material Icons
-# You can copy-paste your options for each possible action, which is more
-# trouble-free but repetitive, or apply only the relevant ones (for example
-# --sink-blacklist is only needed for next-sink).
-exec = pulseaudio-control --icons-volume " , " --icon-muted " " --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo: "  --node-nickname "alsa_output.usb-JBL_JBL_Quantum_300_214b206000000101-00.analog-stereo: "  listen
-click-right = exec pavucontrol &
-click-left = pulseaudio-control togmute
-scroll-up = pulseaudio-control --volume-max 130 up
-scroll-down = pulseaudio-control --volume-max 130 down
-format-underline =  #3EC13F
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 

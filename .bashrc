@@ -120,6 +120,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-zsh
 #export FONTCONFIG_FILE='$HOME/fonts/fonts.conf'
 #export FONTCONFIG_PATH='$HOME/fonts'
