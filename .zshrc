@@ -74,8 +74,8 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # Source custom bash functions
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
+if [ -f ~/.bash_functions.sh ]; then
+    . ~/.bash_functions.sh
 fi
 
 if [ -f ~/.bash_variables ]; then
