@@ -2,12 +2,21 @@ largest_files() {
     local num_files=10
     while getopts ":n:" opt; do
         case $opt in
-            n) num_files=$OPTARG ;;  # Set num_files to the argument passed after -n
+            n) num_files=$OPTARG ;;
             \?) echo "Invalid option: -$OPTARG" >&2; return 1 ;;
             :) echo "Option -$OPTARG requires an argument." >&2; return 1 ;;
         esac
     done
     sudo du -ah . | sort -rh | head -n "$num_files"
+}
+
+format_number() {
+    local number=$1
+    number=${number%%.*}
+    reversed=$(echo $number | rev)
+    with_commas=$(echo $reversed | sed 's/.\{3\}/&,/g')
+    with_commas=${with_commas%,}
+    echo $with_commas | rev
 }
 
 price() {
@@ -20,7 +29,6 @@ price() {
             return 1
         fi
         currencies=$(echo "$response" | jq -r 'to_entries[] | "\(.key): \(.value)"' | sort)
-
         echo "Available currencies:"
         echo "$currencies"
     elif [ $# -ne 2 ]; then
@@ -32,21 +40,16 @@ price() {
         from_currency=$1
         to_currency=$2
         url="https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${from_currency}.json"
-
         response=$(curl -s "$url")
-
         if ! echo "$response" | jq empty >/dev/null 2>&1; then
             echo "Failed to fetch conversion rate. Invalid JSON data."
             return 1
         fi
-
         value=$(echo "$response" | jq -r ".${from_currency}.${to_currency}")
-
         if [ "$value" == "null" ] || [ -z "$value" ]; then
             echo "Conversion rate from $from_currency to $to_currency not found."
         else
-            LC_NUMERIC="en_US.UTF-8"
-            formatted_value=$(printf "%'.2f" "$value")
+            formatted_value=$(format_number "$value")
             echo "$from_currency price in $to_currency: $formatted_value"
         fi
     fi
