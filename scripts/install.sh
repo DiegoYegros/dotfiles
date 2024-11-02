@@ -149,6 +149,7 @@ install() {
         ["bash_variables.sh"]=".bash_variables.sh"
         ["zshrc"]=".zshrc"
         ["bashrc"]=".bashrc"
+        ["nostr"]=".config/nostr"
     )
 
     # Backup and remove original .bashrc if it exists
@@ -238,7 +239,37 @@ configure(){
     else
         echo "✗ Could not find install-nerd-fonts.sh script"
     fi
-}
+
+   # Install Nostr CLI
+    echo "Installing nostr CLI..."
+    nostr_dir="$HOME/.config/nostr"
+    if [ ! -d "$nostr_dir" ]; then
+        echo "✗ Directory $nostr_dir does not exist."
+        return 1
+    fi
+    
+    cd "$nostr_dir" || { echo "✗ Failed to change directory to $nostr_dir"; return 1; }
+    
+    # Ensure Go is installed
+    if ! command -v go &> /dev/null; then
+        echo "✗ Go is not installed or not in the PATH."
+        return 1
+    fi
+
+    # Get the source and build
+    if ! go get nostr-cli; then
+        echo "✗ Failed to get nostr-cli source."
+        return 1
+    fi
+
+    if ! go build -o nostr; then
+        echo "✗ Failed to compile nostr-cli. Please check the source code for errors."
+        return 1
+    fi
+
+    mkdir -p "$HOME/bin"
+    mv nostr "$HOME/bin" || { echo "✗ Failed to move nostr to $HOME/bin"; return 1; }
+    echo "✓ Compiled and installed nostr-cli to $HOME/bin."}
 
 main() {
     install_full=false

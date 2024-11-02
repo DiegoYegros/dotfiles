@@ -1,0 +1,11 @@
+{
+  "relays": [
+    "wss://relay.damus.io",
+    "wss://relay.nostr.band",
+    "wss://relay.primal.net",
+    "wss://nos.lol"
+  ],
+  "encrypted_private_key": "",
+  "salt": "",
+  "public_key": ""
+}
