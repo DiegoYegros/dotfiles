@@ -228,7 +228,7 @@ configure(){
     # Install Nerd Fonts
     echo "Installing Nerd Fonts..."
     script_dir=$(dirname "$(realpath "$0")")
-    f [ -f "$script_dir/install-nerd-fonts.sh" ]; then
+    if [ -f "$script_dir/install-nerd-fonts.sh" ]; then
         bash "$script_dir/install-nerd-fonts.sh"
         if [ $? -eq 0 ]; then
             echo "✓ Nerd Fonts installed successfully"
