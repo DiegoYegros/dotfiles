@@ -144,9 +144,9 @@ install() {
         ["rofi"]=".config/rofi"
         ["scripts"]=".config/scripts"
         ["tmux"]=".config/tmux"
-        ["bash_aliases"]=".bash_aliases.sh"
-        ["bash_functions"]=".bash_functions.sh"
-        ["bash_variables"]=".bash_variables.sh"
+        ["bash_aliases.sh"]=".bash_aliases.sh"
+        ["bash_functions.sh"]=".bash_functions.sh"
+        ["bash_variables.sh"]=".bash_variables.sh"
         ["zshrc"]=".zshrc"
         ["bashrc"]=".bashrc"
     )
