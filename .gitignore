@@ -1,5 +1,5 @@
 dotfiles/dotfiles_v2/tmux/plugins/
-$PWD/nostr/config.json
+nostr/config.json
 *.png
 *.jpeg
 *.jpg
