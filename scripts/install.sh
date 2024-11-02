@@ -171,12 +171,42 @@ install() {
 }
 
 configure(){
+
+    # Configure brightnessctl
     echo "Configuring system settings..."
     if sudo chmod +s $(which brightnessctl); then
         echo "✓ Configured brightnessctl permissions"
     else
         echo "✗ Failed to configure brightnessctl permissions"
     fi
+ 
+    # Set zsh as default shell
+    if [ "$SHELL" != "/usr/bin/zsh" ]; then
+        echo "Setting ZSH as default shell..."
+        if chsh -s $(which zsh); then
+            echo "✓ ZSH set as default shell"
+        else
+            echo "✗ Failed to set ZSH as default shell"
+        fi
+    else
+        echo "✓ ZSH is already the default shell"
+    fi
+
+    # TMUX TPM installation
+    echo "Cloning tmux-plugins/tpm..."
+    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+    echo "✓ Cloned tmux-plugins/tpm successfully!"
+
+    # Automatically install TPM plugins
+    echo "Installing TPM plugins..."
+    if tmux new-session -d -s temp_session; then
+        tmux send-keys -t temp_session "tmux source-file ~/.config/tmux/tmux.conf; ~/.config/tmux/plugins/tpm/bin/install_plugins" C-m
+        tmux kill-session -t temp_session
+        echo "✓ TPM plugins installed successfully!"
+    else
+        echo "✗ Failed to create tmux session for plugin installation"
+    fi
+    
 }
 
 main() {

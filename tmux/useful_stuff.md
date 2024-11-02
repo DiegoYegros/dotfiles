@@ -2,7 +2,7 @@
 Clone tpm
 
 ```bash
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
 ```
 put your tmux config in $XDG_CONFIG_HOME/tmux/tmux.conf
