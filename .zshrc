@@ -69,8 +69,8 @@ TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f ~/.bash_aliases.sh ]; then
+    . ~/.bash_aliases.sh
 fi
 
 # Source custom bash functions
@@ -78,8 +78,8 @@ if [ -f ~/.bash_functions.sh ]; then
     . ~/.bash_functions.sh
 fi
 
-if [ -f ~/.bash_variables ]; then
-    . ~/.bash_variables
+if [ -f ~/.bash_variables.sh ]; then
+    . ~/.bash_variables.sh
 fi
 
 
