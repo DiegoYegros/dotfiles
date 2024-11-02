@@ -197,14 +197,25 @@ configure(){
     git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
     echo "✓ Cloned tmux-plugins/tpm successfully!"
 
-    # Automatically install TPM plugins
+    # Source tmux configuration
+    tmux source-file ~/.config/tmux/tmux.conf || true
+
+    # Install TPM plugins
     echo "Installing TPM plugins..."
-    if tmux new-session -d -s temp_session; then
-        tmux send-keys -t temp_session "tmux source-file ~/.config/tmux/tmux.conf; ~/.config/tmux/plugins/tpm/bin/install_plugins" C-m
+    ~/.config/tmux/plugins/tpm/bin/install_plugins
+    ~/.config/tmux/plugins/tpm/bin/update_plugins all
+    
+    # Clean up any existing temporary sessions
+    tmux kill-session -t temp_session 2>/dev/null || true
+    
+    # Create a temporary session and install plugins
+    if ! tmux has-session -t temp_session 2>/dev/null; then
+        tmux new-session -d -s temp_session
+        sleep 2
+        tmux send-keys -t temp_session:0 "~/.config/tmux/plugins/tpm/bin/install_plugins" Enter
+        sleep 5
         tmux kill-session -t temp_session
         echo "✓ TPM plugins installed successfully!"
-    else
-        echo "✗ Failed to create tmux session for plugin installation"
     fi
     
 }
