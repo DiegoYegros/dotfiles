@@ -270,7 +270,7 @@ configure(){
     mkdir -p "$HOME/bin"
     mv nostr "$HOME/bin" || { echo "✗ Failed to move nostr to $HOME/bin"; return 1; }
     echo "✓ Compiled and installed nostr-cli to $HOME/bin."}
-
+}
 main() {
     install_full=false
     while [[ $# -gt 0 ]]; do
