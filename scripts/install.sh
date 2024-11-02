@@ -26,6 +26,7 @@ apt_deps=(
     "i3blocks"
     "brightnessctl"
     "acpi"
+    "curl"
     "arandr"
     "pavucontrol"
     "pulseaudio"
