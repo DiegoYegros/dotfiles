@@ -151,6 +151,13 @@ install() {
         ["bashrc"]=".bashrc"
     )
 
+    # Backup and remove original .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME/.bashrc" ]; then
+        echo "Backing up original .bashrc..."
+        mv "$HOME/.bashrc" "$HOME/.bashrc.backup"
+        echo "✓ Original .bashrc backed up to .bashrc.backup"
+    fi
+
     for src in "${!dotfiles[@]}"; do
         dest="${dotfiles[$src]}"
         src_path="$base_dir/$src"
@@ -217,7 +224,20 @@ configure(){
         tmux kill-session -t temp_session
         echo "✓ TPM plugins installed successfully!"
     fi
-    
+
+    # Install Nerd Fonts
+    echo "Installing Nerd Fonts..."
+    script_dir=$(dirname "$(realpath "$0")")
+    f [ -f "$script_dir/install-nerd-fonts.sh" ]; then
+        bash "$script_dir/install-nerd-fonts.sh"
+        if [ $? -eq 0 ]; then
+            echo "✓ Nerd Fonts installed successfully"
+        else
+            echo "✗ Failed to install Nerd Fonts"
+        fi
+    else
+        echo "✗ Could not find install-nerd-fonts.sh script"
+    fi
 }
 
 main() {
