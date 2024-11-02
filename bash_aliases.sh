@@ -31,8 +31,8 @@ alias mvncid='mvn clean install -DskipTests'
 alias mvntree='mvn dependency:tree'
 
 # BASH
-alias bashaliases='nvim ~/.bash_aliases'
-alias bashfunctions='nvim ~/.bash_functions'
+alias bashaliases='nvim ~/.bash_aliases.sh'
+alias bashfunctions='nvim ~/.bash_functions.sh'
 alias sourcebash='source ~/.bashrc'
 alias sourcezsh='source ~/.zshrc'
 
