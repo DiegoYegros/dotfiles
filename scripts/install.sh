@@ -148,7 +148,7 @@ install() {
         ["bash_functions"]=".bash_functions.sh"
         ["bash_variables"]=".bash_variables.sh"
         ["zshrc"]=".zshrc"
-        [".bashrc"]=".bashrc"
+        ["bashrc"]=".bashrc"
     )
 
     for src in "${!dotfiles[@]}"; do
