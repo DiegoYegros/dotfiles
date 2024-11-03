@@ -26,7 +26,7 @@ option.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-option.clipboard:append { 'unnamedplus' }
+option.clipboard = 'unnamedplus'
 -- Enable break indent
 option.breakindent = true
 
