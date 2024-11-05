@@ -5,3 +5,4 @@ nostr/config.json
 *.jpg
 *.webp
 *.txt
+*.sum
