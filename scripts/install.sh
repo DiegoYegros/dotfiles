@@ -16,6 +16,7 @@ apt_deps=(
     "openjdk-21-jdk-headless"
     "maven"
     "npm"
+    "yt-dlp"
     "xinput"
     "feh"
     "picom"
