@@ -33,6 +33,7 @@ alias mvntree='mvn dependency:tree'
 # BASH
 alias bashaliases='nvim ~/.bash_aliases.sh'
 alias bashfunctions='nvim ~/.bash_functions.sh'
+alias bashvariables='nvim ~/.bash_variables.sh'
 alias sourcebash='source ~/.bashrc'
 alias sourcezsh='source ~/.zshrc'
 
