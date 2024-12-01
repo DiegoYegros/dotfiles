@@ -3,7 +3,6 @@
 snap_deps=(
     "go"
     "alacritty"
-    "nvim"
 )
 
 snap_deps_extra=(
@@ -15,6 +14,7 @@ snap_deps_extra=(
 apt_deps=(
     "openjdk-21-jdk-headless"
     "maven"
+    "neovim"
     "npm"
     "yt-dlp"
     "xinput"
