@@ -1,6 +1,3 @@
-# fix your wallpaper (stupid bug)
-alias wallpaper='/home/daya/.config/scripts/fehbg.sh'
-
 # CONFIG SHORTCUTS
 alias i3config='nvim $HOME/.config/i3/config'
 alias nvimconfig='nvim $HOME/.config/nvim/'
@@ -21,10 +18,8 @@ alias gcm='git commit -m'
 alias grs='git restore --staged'
 alias gr='git restore'
 alias gitlog= 'git log --oneline --graph --decorate --parents'
-# NEOFETCH IS ARCHIVED!
 
-alias neofetch='screenfetch'
-alias home='cd "/mnt/c/Users/Diego Yegros/"'
+
 # MAVEN
 alias mvnci='mvn clean install'
 alias mvncid='mvn clean install -DskipTests'
@@ -66,7 +61,8 @@ alias mkdir='mkdir -v'
 alias cp='cp -v'
 alias mv='mv -v'
 alias claer='clear'
-alias pdf='zathura'
+alias home='cd "/mnt/c/Users/Diego Yegros/"'
+
 # DOCKER
 alias dps='docker ps'
 alias dpsa='docker ps -a'
