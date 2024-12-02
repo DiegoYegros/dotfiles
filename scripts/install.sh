@@ -292,8 +292,26 @@ main() {
         esac
     done
 
-    install "$install_full"
-    configure
+    # Installation based on distribution
+    local distro=$(get_distribution)
+    if [ "$distro" == "ubuntu" ]; then
+        install "$install_full"
+        configure
+    elif [ "$distro" == "arch" ]; then
+        # Nothing for now.
+    else
+        echo "Running on unsupported distribution: $distro"
+        exit 1
+    fi
 }
 
+get_distribution() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        echo "$ID"
+    else
+        # Fallback
+        lsb_release -i 2>/dev/null | cut -d: -f2 | sed s/'^\t'//
+    fi
+}
 main "$@"
