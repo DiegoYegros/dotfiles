@@ -13,4 +13,7 @@ Run prefix+I to source your tmux.conf
 * prefix + s: rename session.
 * prefix + $: list all sessions and cycle through them.
 * prefix + ,: rename current window.
-
+* prefix + ": create pane vertically.
+* prefix + %: create pane horizontally.
+* prefix + x: close curr pane.
+* prefix + w: open a panel to nvigate across windows in multiple sessions.
