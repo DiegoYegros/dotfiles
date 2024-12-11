@@ -143,6 +143,9 @@ bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed 
 
 # Change Language by pressing Alt+Left Shift.
 bindsym Shift+Alt_L exec --no-startup-id "setxkbmap -option 'grp:alt_shift_toggle' -layout us,es -variant qwerty"
+# Also using Super + space.
+exec_always --no-startup-id "setxkbmap -layout us,es -variant qwerty -option grp:win_space_toggle"
+
 mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
