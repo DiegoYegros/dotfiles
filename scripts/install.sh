@@ -69,6 +69,62 @@ apt_deps_extra=(
     "openvpn"
 )
 
+dnf_deps=(
+    "java-21-openjdk-devel"
+    "maven"
+    "neovim"
+    "nodejs"
+    "yt-dlp"
+    "xorg-xinput"
+    "feh"
+    "picom"
+    "network-manager-gnome"
+    "xss-lock"
+    "maim"
+    "xdotool"
+    "i3blocks"
+    "brightnessctl"
+    "acpi"
+    "curl"
+    "arandr"
+    "pavucontrol"
+    "pulseaudio"
+    "polybar"
+    "automake"
+    "rust"
+    "dmenu"
+    "ripgrep"
+    "cmake"
+    "btop"
+    "dex"
+    "dunst"
+    "fzf"
+    "git"
+    "i3lock"
+    "zsh"
+    "zathura"
+    "xsel"
+    "xclip"
+    "tree"
+    "tmux"
+    "rofi"
+    "net-tools"
+)
+
+dnf_deps_extra=(
+    "wine"
+    "gnome-screenshot"
+    "calibre"
+    "dkms"
+    "ghex"
+    "vlc"
+    "telnet"
+    "sshpass"
+    "screenfetch"
+    "redis"
+    "openvpn"
+)
+
 show_usage() {
     echo "Usage: $0 [OPTIONS]"
     echo "Options:"
@@ -78,60 +134,81 @@ show_usage() {
     echo "Without any options, only basic dependencies will be installed."
 }
 
-install() {
+install_ubuntu() {
     local install_full=$1
-
     log_file="installation_script_log-$(date +"%Y%m%d_%H%M%S").txt"
-    touch "$log_file"
-    echo "Starting installation at $(date)" >"$log_file"
-    echo "=============================================" >>"$log_file"
+    echo "Starting Ubuntu installation at $(date)" >"$log_file"
 
     for dep in "${apt_deps[@]}"; do
         echo "Installing apt package [$dep]..."
         sudo apt-get install -y "$dep" >>"$log_file" 2>&1
-        if [ $? -eq 0 ]; then
-            echo "Installed $dep successfully."
-        else
-            echo "Failed to install $dep. Check $log_file for details."
-        fi
+        [ $? -eq 0 ] && echo "Installed $dep successfully." || echo "Failed to install $dep"
     done
 
     if [ "$install_full" = true ]; then
-        echo "Installing extra apt packages..."
         for dep in "${apt_deps_extra[@]}"; do
             echo "Installing extra apt package [$dep]..."
             sudo apt-get install -y "$dep" >>"$log_file" 2>&1
-            if [ $? -eq 0 ]; then
-                echo "Installed $dep successfully."
-            else
-                echo "Failed to install $dep. Check $log_file for details."
-            fi
+            [ $? -eq 0 ] && echo "Installed $dep successfully." || echo "Failed to install $dep"
         done
     fi
 
-    for dep in "${snap_deps[@]}"; do
-        echo "Installing snap package [$dep]..."
-        sudo snap install "$dep" --classic >>"$log_file" 2>&1
-        if [ $? -eq 0 ]; then
-            echo "Installed $dep successfully."
-        else
-            echo "Failed to install $dep. Check $log_file for details."
-        fi
+    install_snap_packages "$install_full"
+    setup_common
+}
+
+install_fedora() {
+    local install_full=$1
+    log_file="installation_script_log-$(date +"%Y%m%d_%H%M%S").txt"
+    echo "Starting Fedora installation at $(date)" >"$log_file"
+
+    echo "Enabling RPM Fusion repositories..."
+    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+        https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm >>"$log_file" 2>&1
+
+    for dep in "${dnf_deps[@]}"; do
+        echo "Installing dnf package [$dep]..."
+        sudo dnf install -y "$dep" >>"$log_file" 2>&1
+        [ $? -eq 0 ] && echo "Installed $dep successfully." || echo "Failed to install $dep"
     done
 
     if [ "$install_full" = true ]; then
-        echo "Installing extra snap packages..."
-        for dep in "${snap_deps_extra[@]}"; do
-            echo "Installing extra snap package [$dep]..."
-            sudo snap install "$dep" --classic >>"$log_file" 2>&1
-            if [ $? -eq 0 ]; then
-                echo "Installed $dep successfully."
-            else
-                echo "Failed to install $dep. Check $log_file for details."
-            fi
+        for dep in "${dnf_deps_extra[@]}"; do
+            echo "Installing extra dnf package [$dep]..."
+            sudo dnf install -y "$dep" >>"$log_file" 2>&1
+            [ $? -eq 0 ] && echo "Installed $dep successfully." || echo "Failed to install $dep"
         done
     fi
 
+    if ! command -v snap &>/dev/null; then
+        echo "Installing snapd..."
+        sudo dnf install -y snapd >>"$log_file" 2>&1
+        sudo systemctl enable --now snapd.socket >>"$log_file" 2>&1
+        sudo ln -s /var/lib/snapd/snap /snap >>"$log_file" 2>&1
+    fi
+
+    install_snap_packages "$install_full"
+    setup_common
+}
+
+install_snap_packages() {
+    local install_full=$1
+    for dep in "${snap_deps[@]}"; do
+        echo "Installing snap package [$dep]..."
+        sudo snap install "$dep" --classic >>"$log_file" 2>&1
+        [ $? -eq 0 ] && echo "Installed $dep successfully." || echo "Failed to install $dep"
+    done
+
+    if [ "$install_full" = true ]; then
+        for dep in "${snap_deps_extra[@]}"; do
+            echo "Installing extra snap package [$dep]..."
+            sudo snap install "$dep" --classic >>"$log_file" 2>&1
+            [ $? -eq 0 ] && echo "Installed $dep successfully." || echo "Failed to install $dep"
+        done
+    fi
+}
+
+setup_common() {
     script_dir=$(dirname "$(realpath "$0")")
     base_dir=$(realpath "$script_dir/..")
 
@@ -153,11 +230,9 @@ install() {
         ["nostr"]=".config/nostr"
     )
 
-    # Backup and remove original .bashrc if it exists
     if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME/.bashrc" ]; then
         echo "Backing up original .bashrc..."
         mv "$HOME/.bashrc" "$HOME/.bashrc.backup"
-        echo "✓ Original .bashrc backed up to .bashrc.backup"
     fi
 
     for src in "${!dotfiles[@]}"; do
@@ -165,144 +240,51 @@ install() {
         src_path="$base_dir/$src"
         dest_path="$HOME/$dest"
         mkdir -p "$(dirname "$dest_path")"
-        if [ ! -L "$dest_path" ]; then
-            ln -s "$src_path" "$dest_path"
-            echo "Linked $src to $dest_path"
-        else
-            echo "Symbolic link for $dest_path already exists"
-        fi
+        [ ! -L "$dest_path" ] && ln -s "$src_path" "$dest_path"
     done
-
-    echo "Symbolic links created successfully."
-    echo "Installation completed."
-    echo "=============================================" >>"$log_file"
-    echo "Installation completed at $(date)" >>"$log_file"
 }
 
-configure(){
-
-    # Configure brightnessctl
+configure() {
     echo "Configuring system settings..."
-    if sudo chmod +s $(which brightnessctl); then
-        echo "✓ Configured brightnessctl permissions"
-    else
-        echo "✗ Failed to configure brightnessctl permissions"
-    fi
- 
-    # Set zsh as default shell
-    if [ "$SHELL" != "/usr/bin/zsh" ]; then
-        echo "Setting ZSH as default shell..."
-        if chsh -s $(which zsh); then
-            echo "✓ ZSH set as default shell"
-        else
-            echo "✗ Failed to set ZSH as default shell"
-        fi
-    else
-        echo "✓ ZSH is already the default shell"
+    sudo chmod +s $(which brightnessctl) 2>/dev/null && echo "✓ Configured brightnessctl permissions"
+
+    if [ "$SHELL" != "$(which zsh)" ]; then
+        chsh -s $(which zsh) && echo "✓ ZSH set as default shell" || echo "✗ Failed to set ZSH"
     fi
 
-    # TMUX TPM installation
-    echo "Cloning tmux-plugins/tpm..."
-    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-    echo "✓ Cloned tmux-plugins/tpm successfully!"
+    [ ! -d ~/.config/tmux/plugins/tpm ] &&
+        git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
-    # Source tmux configuration
-    tmux source-file ~/.config/tmux/tmux.conf || true
-
-    # Install TPM plugins
-    echo "Installing TPM plugins..."
-    ~/.config/tmux/plugins/tpm/bin/install_plugins
-    ~/.config/tmux/plugins/tpm/bin/update_plugins all
-    
-    # Clean up any existing temporary sessions
-    tmux kill-session -t temp_session 2>/dev/null || true
-    
-    # Create a temporary session and install plugins
-    if ! tmux has-session -t temp_session 2>/dev/null; then
-        tmux new-session -d -s temp_session
-        sleep 2
-        tmux send-keys -t temp_session:0 "~/.config/tmux/plugins/tpm/bin/install_plugins" Enter
-        sleep 5
-        tmux kill-session -t temp_session
-        echo "✓ TPM plugins installed successfully!"
-    fi
-
-    # Install Nerd Fonts
-    echo "Installing Nerd Fonts..."
     script_dir=$(dirname "$(realpath "$0")")
-    if [ -f "$script_dir/install-nerd-fonts.sh" ]; then
-        bash "$script_dir/install-nerd-fonts.sh"
-        if [ $? -eq 0 ]; then
-            echo "✓ Nerd Fonts installed successfully"
-        else
-            echo "✗ Failed to install Nerd Fonts"
-        fi
-    else
-        echo "✗ Could not find install-nerd-fonts.sh script"
-    fi
+    [ -f "$script_dir/install-nerd-fonts.sh" ] && bash "$script_dir/install-nerd-fonts.sh"
 
-   # Install Nostr CLI
-    echo "Installing nostr CLI..."
     nostr_dir="$HOME/.config/nostr"
-    if [ ! -d "$nostr_dir" ]; then
-        echo "✗ Directory $nostr_dir does not exist."
-        return 1
-    fi
-    
-    cd "$nostr_dir" || { echo "✗ Failed to change directory to $nostr_dir"; return 1; }
-    
-    # Ensure Go is installed
-    if ! command -v go &> /dev/null; then
-        echo "✗ Go is not installed or not in the PATH."
-        return 1
-    fi
-
-    # Get the source and build
-    if ! go get nostr-cli; then
-        echo "✗ Failed to get nostr-cli source."
-        return 1
-    fi
-
-    if ! go build -o nostr; then
-        echo "✗ Failed to compile nostr-cli. Please check the source code for errors."
-        return 1
-    fi
-
-    mkdir -p "$HOME/bin"
-    mv nostr "$HOME/bin" || { echo "✗ Failed to move nostr to $HOME/bin"; return 1; }
-    echo "✓ Compiled and installed nostr-cli to $HOME/bin."}
+    [ -d "$nostr_dir" ] && {
+        cd "$nostr_dir"
+        go get nostr-cli
+        go build -o nostr && mkdir -p "$HOME/bin" && mv nostr "$HOME/bin"
+    }
 }
+
 main() {
-    install_full=false
+    local install_full=false
     while [[ $# -gt 0 ]]; do
         case $1 in
-            --full)
-                install_full=true
-                shift
-                ;;
-            --help)
-                show_usage
-                exit 0
-                ;;
-            *)
-                echo "Unknown option: $1"
-                show_usage
-                exit 1
-                ;;
+            --full) install_full=true ;;
+            --help) show_usage; exit 0 ;;
+            *) echo "Unknown option: $1"; show_usage; exit 1 ;;
         esac
+        shift
     done
 
-    # Installation based on distribution
-    local distro=$(get_distribution)
-    if [ "$distro" == "ubuntu" ]; then
-        install "$install_full"
-        configure
-    elif [ "$distro" == "arch" ]; then
-        # Nothing for now.
-    else
-        echo "Running on unsupported distribution: $distro"
-        exit 1
-    fi
+    case $(get_distribution) in
+        ubuntu) install_ubuntu "$install_full" ;;
+        fedora) install_fedora "$install_full" ;;
+        *) echo "Unsupported distribution"; exit 1 ;;
+    esac
+
+    configure
+    echo "Installation completed. Log saved to $log_file"
 }
 
 get_distribution() {
@@ -310,8 +292,8 @@ get_distribution() {
         . /etc/os-release
         echo "$ID"
     else
-        # Fallback
-        lsb_release -i 2>/dev/null | cut -d: -f2 | sed s/'^\t'//
+        lsb_release -i | cut -d: -f2 | sed 's/\t//g'
     fi
 }
+
 main "$@"
