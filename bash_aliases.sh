@@ -17,7 +17,7 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias grs='git restore --staged'
 alias gr='git restore'
-alias gitlog= 'git log --oneline --graph --decorate --parents'
+alias gitlog='git log --oneline --graph --decorate --parents'
 
 
 # MAVEN
