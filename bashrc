@@ -123,6 +123,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
+export TERM=xterm
 #export FONTCONFIG_FILE='$HOME/fonts/fonts.conf'
 #export FONTCONFIG_PATH='$HOME/fonts'
