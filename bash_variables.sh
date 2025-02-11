@@ -8,3 +8,5 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 export MANPAGER="nvim +Man!"
 export PATH="$HOME/bin:$PATH:/snap/bin"
+export TERM=xterm
+

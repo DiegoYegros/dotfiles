@@ -281,6 +281,5 @@ fi
 unset __conda_setup
 
 
-export TERM=xterm
 #export FONTCONFIG_FILE='$HOME/.fonts/fonts.conf'
 #export FONTCONFIG_PATH='$HOME/.fonts'
