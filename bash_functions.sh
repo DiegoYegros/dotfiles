@@ -62,3 +62,49 @@ real_price() {
         echo "Usage: real_price btc"
     fi
 }
+
+createalias() {
+    if [ $# -ne 2 ]; then
+        echo "Usage: createalias <alias_name> <alias_value>"
+        return 1
+    fi
+    local alias_name=$1
+    local alias_value=$2
+    local alias_file="$HOME/.bash_aliases.sh"
+
+    [ ! -f "$alias_file" ] && touch "$alias_file"
+
+    if grep -q "^alias ${alias_name}=" "$alias_file"; then
+        echo "El alias '${alias_name}' ya existe en ${alias_file}."
+        return 1
+    fi
+
+    echo "alias ${alias_name}='${alias_value}'" >> "$alias_file"
+    echo "Alias '${alias_name}' agregado a ${alias_file}."
+
+    source "$alias_file"
+    echo "Archivo ${alias_file} recargado."
+}
+
+
+deletealias() {
+    if [ $# -ne 1 ]; then
+        echo "Usage: deletealias <alias_name>"
+        return 1
+    fi
+    local alias_name=$1
+    local alias_file="$HOME/.bash_aliases.sh"
+
+    if [ ! -f "$alias_file" ]; then
+        echo "El archivo ${alias_file} no existe."
+        return 1
+    fi
+
+    if ! grep -q "^alias ${alias_name}=" "$alias_file"; then
+        echo "El alias '${alias_name}' no existe en ${alias_file}."
+        return 1
+    fi
+
+    sed -i.bak "/^alias ${alias_name}=/d" "$alias_file"
+    echo "Alias '${alias_name}' eliminado de ${alias_file}."
+}
