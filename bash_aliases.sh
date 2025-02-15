@@ -69,6 +69,7 @@ alias dpsa='docker ps -a'
 
 # YT-DLP
 alias yt='yt-dlp -P '~/Videos/' '
+alias yt-music='yt-dlp -x --audio-format mp3 -P '~/Music/' '
 
 # UPDATE SYSTEM
 alias update='$HOME/.config/scripts/update.sh'
