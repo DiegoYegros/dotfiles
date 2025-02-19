@@ -16,6 +16,8 @@ apt_deps=(
     "maven"
     "neovim"
     "npm"
+    "unzip"
+    "gcc"
     "yt-dlp"
     "xinput"
     "feh"
