@@ -19,6 +19,8 @@ apt_deps=(
     "unzip"
     "gcc"
     "yt-dlp"
+    "arp-scan"
+    "nmap"
     "xinput"
     "feh"
     "picom"
