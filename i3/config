@@ -11,19 +11,19 @@ exec_always --no-startup-id xinput set-prop "ELAN0788:00 04F3:321A Touchpad" "li
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id $XDG_CONFIG_HOME/scripts/monitor-setup.sh
-exec --no-startup-id picom --config $XDG_CONFIG_HOME/picom/picom.conf
+exec --no-startup-id $HOME/.config/scripts/monitor-setup.sh
+exec --no-startup-id picom --config $HOME/.config/picom/picom.conf
 
 set $refresh_i3status killall -SIGUSR1 i3status
 
 # cool binding stuff
-bindsym XF86AudioRaiseVolume exec --no-startup-id $XDG_CONFIG_HOME/scripts/volume_up.sh
-bindsym XF86AudioLowerVolume exec --no-startup-id $XDG_CONFIG_HOME/scripts/volume_down.sh
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/scripts/volume_up.sh
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/scripts/volume_down.sh
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym XF86MonBrightnessDown exec --no-startup-id $XDG_CONFIG_HOME/scripts/brightness_down.sh
-bindsym XF86MonBrightnessUp exec --no-startup-id $XDG_CONFIG_HOME/scripts/brightness_up.sh
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/scripts/brightness_down.sh
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.config/scripts/brightness_up.sh
 
-bindsym $mod+o exec --no-startup-id $XDG_CONFIG_HOME/scripts/launch_apps.sh
+bindsym $mod+o exec --no-startup-id $HOME/.config/scripts/launch_apps.sh
 
 floating_modifier $mod
 
@@ -47,11 +47,11 @@ bindsym $mod+Shift+o exec --no-startup-id obsidian
 bindsym $mod+q kill
 
 # set launcher menu
-bindsym $mod+d exec --no-startup-id $XDG_CONFIG_HOME/rofi/launchers/type-1/launcher.sh
-bindsym $mod+p exec --no-startup-id $XDG_CONFIG_HOME/rofi/powermenu/type-1/powermenu.sh
+bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/launchers/type-1/launcher.sh
+bindsym $mod+p exec --no-startup-id $HOME/.config/rofi/powermenu/type-1/powermenu.sh
 
 # Screen layout config
-bindsym $mod+bracketleft exec --no-startup-id $XDG_CONFIG_HOME/scripts/monitor-setup.sh
+bindsym $mod+bracketleft exec --no-startup-id $HOME/.config/scripts/monitor-setup.sh
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -178,4 +178,4 @@ client.focused          #6c3483 #4a235a #ffffff #8e44ad   #4a235a
 #client.background       #1c1025
 
 # Configure polybar
-exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
