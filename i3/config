@@ -105,9 +105,9 @@ set $ws9 "9"
 set $ws10 "10"
 
 workspace $ws1 output $third_monitor
-workspace $ws2 output $main_monitor
-workspace $ws3 output $second_monitor
-workspace $ws4 output $third_monitor
+workspace $ws2 output $third_monitor
+workspace $ws3 output $main_monitor
+workspace $ws4 output $main_monitor
 workspace $ws5 output $main_monitor
 workspace $ws6 output $second_monitor
 workspace $ws7 output $third_monitor
@@ -166,16 +166,12 @@ bindsym Print exec --no-startup-id maim -s | xclip -selection clipboard -t image
 bindsym Shift+} exec --no-startup-id gnome-screenshot --interactive
 
 # i3 gaps
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 0
 gaps outer 10
 
 # Dark purple
 client.focused          #6c3483 #4a235a #ffffff #8e44ad   #4a235a
-#client.focused_inactive #5b2c6f #4a235a #d7bde2 #5b2c6f   #4a235a
-#client.unfocused        #4a235a #2c1a33 #a569bd #2c1a33   #2c1a33
-#client.urgent           #b03a2e #6c3483 #ffffff #6c3483   #6c3483
-#client.placeholder      #2c1a33 #1c1025 #ffffff #2c1a33   #1c1025
-#client.background       #1c1025
 
-# Configure polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+bar {
+        status_command i3status
+}
