@@ -3,8 +3,8 @@ Description=Bitcoin Daemon (mainnet)
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/bitcoind -chain=main
-ExecStop=/usr/bin/bitcoin-cli -chain=main stop
+ExecStart=/usr/bin/bitcoind -chain=main -datadir=/home/alezkar/.bitcoin/main
+ExecStop=/usr/bin/bitcoin-cli stop
 User=alezkar
 Restart=on-failure
 
