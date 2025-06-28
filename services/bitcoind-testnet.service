@@ -1,0 +1,11 @@
+[Unit]
+Description=Bitcoin Daemon (testnet)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/bitcoind -chain=test
+User=alezkar
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

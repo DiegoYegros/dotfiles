@@ -280,6 +280,3 @@ else
 fi
 unset __conda_setup
 
-
-#export FONTCONFIG_FILE='$HOME/.fonts/fonts.conf'
-#export FONTCONFIG_PATH='$HOME/.fonts'

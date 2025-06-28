@@ -91,8 +91,8 @@ bindsym $mod+a focus parent
 bindsym $mod+z focus child
 
 set $main_monitor eDP-1
-set $second_monitor HDMI-1-0
-set $third_monitor DP-1
+set $second_monitor DP-1
+set $third_monitor HDMI-1-0
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -106,10 +106,10 @@ set $ws10 "10"
 
 workspace $ws1 output $third_monitor
 workspace $ws2 output $third_monitor
-workspace $ws3 output $main_monitor
+workspace $ws3 output $third_monitor
 workspace $ws4 output $main_monitor
 workspace $ws5 output $main_monitor
-workspace $ws6 output $second_monitor
+workspace $ws6 output $main_monitor
 workspace $ws7 output $third_monitor
 workspace $ws8 output $main_monitor
 workspace $ws9 output $second_monitor

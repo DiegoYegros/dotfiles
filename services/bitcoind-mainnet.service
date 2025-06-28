@@ -1,0 +1,13 @@
+[Unit]
+Description=Bitcoin Daemon (mainnet)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/bitcoind -chain=main
+ExecStop=/usr/bin/bitcoin-cli -chain=main stop
+User=alezkar
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+

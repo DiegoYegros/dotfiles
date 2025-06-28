@@ -73,3 +73,6 @@ alias yt-music='yt-dlp -x --audio-format mp3 -P '~/Music/' '
 
 # UPDATE SYSTEM
 alias update='$HOME/.config/scripts/update.sh'
+
+alias javaversion='sudo update-alternatives --config java'
+alias m2='cd ~/.m2'

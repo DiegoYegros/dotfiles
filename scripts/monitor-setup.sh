@@ -23,7 +23,6 @@ monitor_setup() {
 		echo "Unexpected number of monitors: $monitor_count"
 		;;
 	esac
-	"$HOME"/.config/scripts/fehbg.sh
 }
 
 monitor_setup
