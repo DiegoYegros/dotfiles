@@ -3,7 +3,7 @@ Description=Bitcoin Daemon (testnet)
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/bitcoind -chain=test
+ExecStart=/usr/bin/bitcoind -conf=/home/alezkar/.bitcoin/testnet3/bitcoin.conf
 User=alezkar
 Restart=on-failure
 
