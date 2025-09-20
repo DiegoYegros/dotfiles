@@ -268,6 +268,8 @@ configure() {
         go get nostr-cli
         go build -o nostr && mkdir -p "$HOME/bin" && mv nostr "$HOME/bin"
     }
+    grep -qxF "set completion-ignore-case on" "$HOME/.inputrc" 2>/dev/null || \
+    echo "set completion-ignore-case on" >> "$HOME/.inputrc"
 }
 
 main() {
