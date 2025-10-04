@@ -3,7 +3,7 @@ Description=LND Lightning Network Daemon
 After=network.target bitcoind-mainnet.service
 
 [Service]
-ExecStart=/usr/local/bin/lnd --no-macaroons
+ExecStart=/usr/local/bin/lnd
 User=alezkar
 Restart=on-failure
 TimeoutSec=120
